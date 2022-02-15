@@ -1,0 +1,43 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var ID = int.Parse(Request["ID"]);
+    var xl = new XL_LOAIHANG();
+
+    if (IsPost)
+    {
+        xl.XoaLoaiHang(ID);
+        Response.Redirect("~/UI/MH_DANHSACH_LOAIHANG.cshtml");
+    }
+    else
+    {
+        var lh = xl.DocLoaiHang(ID);
+        if (lh == null)
+        {
+            Chuoi = "Loai hang nay khong ton tai";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_XOA_LOAIHANG.cshtml?ID=@ID" method="post">
+            Ban co muon Xoa loai hang nay khong???
+            <input type="submit" value="Delete">
+        </form>
+
+        @Chuoi
+
+    </div>
+</body>
+</html>

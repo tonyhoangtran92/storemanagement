@@ -1,0 +1,42 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var ID = int.Parse(Request["ID"]);
+    var xl = new XL_SANPHAM();
+
+    if (IsPost)
+    {
+        xl.XoaSanPham(ID);
+        Response.Redirect("~/UI/MH_DANHSACH_SANPHAM.cshtml");
+    }
+    else
+    {
+        if (ID == null)
+        {
+            Chuoi = "San pham nay khong ton tai";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_XOA_SANPHAM.cshtml?ID=@ID" method="post">
+            Ban co muon Xoa san pham nay khong?
+            <input type="submit" value="Delete">
+        </form>
+
+        @Chuoi
+
+    </div>
+</body>
+</html>

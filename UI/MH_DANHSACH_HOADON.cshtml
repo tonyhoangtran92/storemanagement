@@ -1,0 +1,97 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var xl = new XL_HOADON();
+    var keyword = string.Empty;
+
+    if (IsPost)
+    {
+        keyword = Request["keyword"];
+    }
+    List<HOADON> dsHoaDon = xl.TimHoaDon(keyword);
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        h1 {
+            text-align: center;
+            color: blue;
+        }
+
+        h3 {
+            text-decoration: underline;
+            color: forestgreen;
+            text-align: center;
+        }
+
+        .dsHD {
+            padding-left: 30%;
+            padding-right: 30%
+        }
+    </style>
+</head>
+<body>
+    <h1>DANH SACH HOA DON</h1>
+    <div style="text-align:center">
+        <form action="~/UI/MH_DANHSACH_HOADON.cshtml" method="post">
+            <h3>Tìm kiếm: </h3><br />
+            <input type="text" name="keyword" value="" placeholder="Search" />
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+    <br />
+    <div class="dsHD">
+        <table style="width: 600px">
+            <tr>
+                <th>ID</th>
+                <th>LoaiHoaDon</th>
+                <th>NgayTao</th>
+                <th>Xử lý</th>
+            </tr>
+            @foreach (var hd in dsHoaDon)
+            {
+                <tr>
+                    <td>@hd.ID</td>
+                    <td>@hd.LoaiHoaDon</td>
+                    <td>@hd.NgayTao</td>
+
+                    <td>
+                        <a href="~/UI/MH_XOA_HOADON.cshtml?id=@hd.ID"><input type="button" value="Delete" /></a>
+                        <a href="~/UI/MH_SUA_HOADON.cshtml?id=@hd.ID"><input type="button" value="Update" /></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <br />
+    <div style="text-align: center">
+        <form action="~/UI/MH_THEM_HOADON.cshtml" method="post">
+            <a href="~/UI/MH_THEM_HOADON.cshtml">
+                <input type="button" value="Them hoa don" />
+            </a>
+        </form>
+    </div>
+
+    <br />
+    <div style="text-align: center">
+        <form action="~/UI/Index.cshtml" method="post">
+            <a href="~/UI/Index.cshtml">
+                <input type="button" value="Back to Main page" />
+            </a>
+        </form>
+    </div>
+</body>
+</html>

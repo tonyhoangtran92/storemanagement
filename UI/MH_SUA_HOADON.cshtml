@@ -1,0 +1,55 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var ID = int.Parse(Request["ID"]);
+    HOADON h = null;
+    var xl = new XL_HOADON();
+
+    if (IsPost)
+    {
+        var LoaiHoaDon = Request["LoaiHoaDon"];
+        var NgayTao = DateTime.Parse(Request["NgayTao"]);
+        h = new HOADON(ID, LoaiHoaDon, NgayTao);
+
+        xl.SuaHoaDon(h);
+        Response.Redirect("~/UI/MH_DANHSACH_HOADON.cshtml");
+    }
+    else
+    {
+        h = xl.DocHoaDon(ID);
+        if (h == null)
+        {
+            Chuoi = "Hoa don nay khong ton tai";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SUA_HOADON.cshtml" method="post">
+            ID: <br />
+            <input type="text" name="ID" value="@if (h != null) {@h.ID}" readonly /> <br />
+            LoaiHoaDon: <br />
+            <select name="LoaiHoaDon">
+                <option>HoaDonNhap</option>
+                <option>HoaDonXuat</option>
+            </select>
+            Ngaytao: <br />
+            <input type="datetime" name="NgayTao" value="@if (h != null) {@h.NgayTao}" /> <br />
+
+            <input type="submit" value="Update" />
+        </form>
+        @Chuoi
+    </div>
+</body>
+</html>

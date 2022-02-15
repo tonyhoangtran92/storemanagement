@@ -1,0 +1,49 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var ID = int.Parse(Request["ID"]);
+    LOAIHANG lh = null;
+    var xl = new XL_LOAIHANG();
+
+    if (IsPost)
+    {
+        var LoaiHang = Request["LoaiHang"];
+        lh = new LOAIHANG(ID, LoaiHang);
+
+        xl.SuaLoaiHang(lh);
+        Response.Redirect("~/UI/MH_DANHSACH_LOAIHANG.cshtml");
+    }
+    else
+    {
+        lh = xl.DocLoaiHang(ID);
+        if (lh == null)
+        {
+            Chuoi = "Loai hang khong ton tai";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SUA_LOAIHANG.cshtml" method="post">
+            ID: <br />
+            <input type="text" name="ID" value="@if (lh != null) {@lh.ID}" readonly /> <br />
+            LoaiHang: <br />
+            <input type="text" name="LoaiHang" value="@if (lh != null) {@lh.LoaiHang}" /> <br />
+
+            <input type="submit" value="Update" />
+        </form>
+        @Chuoi
+    </div>
+</body>
+</html>

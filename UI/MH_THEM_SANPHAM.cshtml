@@ -1,0 +1,59 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+   
+    if (IsPost)
+    {
+        var TenHang = Request["TenHang"];
+        var HanDung = DateTime.Parse(Request["HanDung"]);
+        var CongtySX = Request["CongtySX"];
+        var NamSanXuat = int.Parse(Request["NamSanXuat"]);
+        var LoaiHang = Request["LoaiHang"];
+
+        var xl = new XL_SANPHAM();
+        xl.ThemSanPham(TenHang, HanDung, CongtySX, NamSanXuat, LoaiHang);
+        Response.Redirect("~/UI/MH_DANHSACH_SANPHAM.cshtml");
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_THEM_SANPHAM.cshtml" method="post">
+            TenHang: <br />
+            <input type="text" name="TenHang" value="" /> <br />
+            HanDung: <br />
+            <input type="text" name="HanDung" value="" /> <br />
+            CongtySX: <br />
+            <input type="text" name="CongtySX" value="" /> <br />
+            NamSanXuat: <br />
+            <input type="text" name="NamSanXuat" value="" /> <br />
+            LoaiHang: <br />
+            @{
+                var ltLH = new LT_LOAIHANG();
+                var dsLoaiHang = ltLH.DocdsLoaiHang();
+                <select name="LoaiHang">
+                    @for (int i = 0; i < @dsLoaiHang.Count; i++)
+                    {
+                        <option>@dsLoaiHang[i].LoaiHang</option>
+
+                    }
+                </select>
+            }
+
+            <br />
+            <input type="submit" value="Add" />
+        </form>
+        @Chuoi
+    </div>
+</body>
+</html>

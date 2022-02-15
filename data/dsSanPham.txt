@@ -1,0 +1,5 @@
+4
+1,Laptop Asus,10/20/2019 12:00:00 AM,AA, 1999,Laptop
+2,Laptop VaiO,10/20/2023 12:00:00 AM,BB, 2001,Laptop
+3,Samsung,11/10/2016 12:00:00 AM,CC, 2021,Điện thoại
+4,Thịt gà,11/10/2022 12:00:00 AM, DD, 2021,Thịt

@@ -1,0 +1,61 @@
+﻿@using DoAnLTHDT.ENTITIES_OBJECT
+@using DoAnLTHDT.BUSSINESS_SERVICE
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+
+    var xlSP = new XL_SANPHAM();
+    int[] hangTonKho = xlSP.HangTonKho();
+
+    var ltLH = new LT_LOAIHANG();
+    List<LOAIHANG> dsLH = ltLH.DocdsLoaiHang();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Bảng thống kê hàng tồn kho</h1>
+    </div>
+
+    <div>
+        <table style="width: 400px">
+            <tr>
+                <th>ID</th>
+                <th>LoaiHang</th>
+                <th>SoLuongTonKho</th>
+            </tr>
+            @{ 
+                for (int i = 0; i<dsLH.Count; i++)
+                {
+                    <tr>
+                        <td>@dsLH[i].ID</td>
+                        <td>@dsLH[i].LoaiHang</td>
+                        <td>@hangTonKho[i]</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <br />
+    <div style="text-align: center">
+        <form action="~/UI/Index.cshtml" method="post">
+            <a href="~/UI/Index.cshtml">
+                <input type="button" value="Back to Main page" />
+            </a>
+        </form>
+    </div>
+</body>
+</html>

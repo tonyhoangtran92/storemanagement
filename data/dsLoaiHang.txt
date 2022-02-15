@@ -1,0 +1,5 @@
+4
+1,Điện thoại
+2,Laptop
+3,Thịt
+4,Rau củ quả

@@ -1,0 +1,42 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var ID = int.Parse(Request["ID"]);
+    var xl = new XL_HOADON();
+
+    if (IsPost)
+    {
+        xl.XoaHoaDon(ID);
+        Response.Redirect("~/UI/MH_DANHSACH_HOADON.cshtml");
+    }
+    else
+    {
+        if (ID == null)
+        {
+            Chuoi = "Hoa don nay khong ton tai";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_XOA_HOADON.cshtml?ID=@ID" method="post">
+            Ban co muon Xoa hoa don nay khong???
+            <input type="submit" value="Delete">
+        </form>
+
+        @Chuoi
+
+    </div>
+</body>
+</html>

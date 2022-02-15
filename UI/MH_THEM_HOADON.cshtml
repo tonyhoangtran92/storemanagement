@@ -1,0 +1,46 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+
+    if (IsPost)
+    {
+        var LoaiHoaDon = Request["LoaiHoaDon"];
+        var NgayTao = DateTime.Parse(Request["NgayTao"]);
+
+        var xl = new XL_HOADON();
+        xl.ThemHoaDon(LoaiHoaDon, NgayTao);
+
+        Response.Redirect("~/UI/MH_DANHSACH_HOADON.cshtml");
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_THEM_HOADON.cshtml" method="post">
+            LoaiHoaDon: <br />
+            <br />
+            <select name="LoaiHoaDon">
+                <option>HoaDonNhap</option>
+                <option>HoaDonXuat</option>
+            </select>
+            <br />
+            <br />
+            Ngaytao: <br />
+            <input type="datetime" name="NgayTao" value="" /> <br />
+            <br />
+            <input type="submit" value="Add" />
+        </form>
+        @Chuoi
+    </div>
+</body>
+</html>

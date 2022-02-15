@@ -1,0 +1,72 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var ID = int.Parse(Request["ID"]);
+    SANPHAM sp = null;
+    var xl = new XL_SANPHAM();
+
+    if (IsPost)
+    {
+        var TenHang = Request["TenHang"];
+        var HanDung = DateTime.Parse(Request["HanDung"]);
+        var CongtySX = Request["CongtySX"];
+        var NamSanXuat = int.Parse(Request["NamSanXuat"]);
+        var LoaiHang = Request["LoaiHang"];
+        sp = new SANPHAM(ID, TenHang, HanDung, CongtySX, NamSanXuat, LoaiHang);
+
+        xl.SuaSanPham(sp);
+        Response.Redirect("~/UI/MH_DANHSACH_SANPHAM.cshtml");
+    }
+    else
+    {
+        sp = xl.DocSanPham(ID);
+        if (sp == null)
+        {
+            Chuoi = "San pham khong ton tai";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SUA_SANPHAM.cshtml" method="post">
+            ID: <br />
+            <input type="text" name="ID" value="@if (sp != null) {@sp.ID}" readonly /> <br />
+            TenHang: <br />
+            <input type="text" name="TenHang" value="@if (sp != null) {@sp.TenHang}" /> <br />
+            HanDung: <br />
+            <input type="text" name="HanDung" value="@if (sp != null) {@sp.HanDung}" /> <br />
+            CongtySX: <br />
+            <input type="text" name="CongtySX" value="@if (sp != null) {@sp.CongtySX}" /> <br />
+            NamSanXuat: <br />
+            <input type="text" name="NamSanXuat" value="@if (sp != null) {@sp.NamSanXuat}" /> <br />
+            LoaiHang: <br />                
+           @{
+               var ltLH = new LT_LOAIHANG();
+               var dsLoaiHang = ltLH.DocdsLoaiHang();
+               <select name="LoaiHang">
+                        @for (int i = 0; i < @dsLoaiHang.Count; i++)
+                        {
+                            <option>@dsLoaiHang[i].LoaiHang</option>
+
+                        }
+                    </select>
+            }
+
+            <br />
+            <input type="submit" value="Update" />
+        </form>
+        @Chuoi
+    </div>
+</body>
+</html>

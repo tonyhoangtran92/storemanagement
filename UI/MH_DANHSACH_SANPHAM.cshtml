@@ -1,0 +1,108 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var xl = new XL_SANPHAM();
+    var keyword = string.Empty;
+
+    if (IsPost)
+    {
+        keyword = Request["keyword"];
+    }
+    List<SANPHAM> dssanpham = xl.TimSanPham(keyword);
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            width: 900px;
+        }
+
+        h1 {
+            text-align: center;
+            color: blue;
+        }
+
+        h3 {
+            text-decoration: underline;
+            color: forestgreen;
+            text-align: center;
+        }
+
+        .dssp {
+            padding-left: 10%;
+            padding-right: 10%
+        }
+    </style>
+</head>
+<body>
+    <h1>DANH SACH SAN PHAM</h1>
+
+    <div style="text-align: center">
+        <form action="~/UI/MH_DANHSACH_SANPHAM.cshtml" method="post">
+            <h3>Tim kiem: </h3>
+            <input type="text" name="keyword" value="" placeholder="Search" /> <input type="submit" value="Search" />
+        </form>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="dssp">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>TenHang</th>
+                <th>HanDung</th>
+                <th>CongtySX</th>
+                <th>NamSanXuat</th>
+                <th>LoaiHang</th>
+                <th>Xu ly</th>
+            </tr>
+            @foreach (var sp in dssanpham)
+            {
+                <tr>
+                    <td>@sp.ID</td>
+                    <td>@sp.TenHang</td>
+                    <td>@sp.HanDung</td>
+                    <td>@sp.CongtySX</td>
+                    <td>@sp.NamSanXuat</td>
+                    <td>@sp.LoaiHang</td>
+
+                    <td>
+                        <a href="~/UI/MH_XOA_SANPHAM.cshtml?id=@sp.ID"><input type="button" value="Delete" /></a>
+                        <a href="~/UI/MH_SUA_SANPHAM.cshtml?id=@sp.ID"><input type="button" value="Update" /></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <br />
+    <div style="text-align: center">
+        <form action="~/UI/MH_THEM_SANPHAM.cshtml" method="post">
+            <a href="~/UI/MH_THEM_SANPHAM.cshtml">
+                <input type="button" value="Them san pham" />
+            </a>
+        </form>
+    </div>
+
+    <br />
+    <div style="text-align: center">
+        <form action="~/UI/Index.cshtml" method="post">
+            <a href="~/UI/Index.cshtml">
+                <input type="button" value="Back to Main page" />
+            </a>
+        </form>
+    </div>
+</body>
+</html>

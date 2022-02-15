@@ -1,0 +1,37 @@
+﻿@using DoAnLTHDT.BUSSINESS_SERVICE
+@using DoAnLTHDT.ENTITIES_OBJECT
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+
+    if (IsPost)
+    {
+        var LoaiHang = Request["LoaiHang"];
+        
+        var xl = new XL_LOAIHANG();
+        xl.ThemLoaiHang(LoaiHang);
+
+        Response.Redirect("~/UI/MH_DANHSACH_LOAIHANG.cshtml");
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_THEM_LOAIHANG.cshtml" method="post">
+            LoaiHang: <br />
+            <input type="text" name="LoaiHang" value="" /> <br />
+
+            <input type="submit" value="Add" />
+        </form>
+        @Chuoi
+    </div>
+</body>
+</html>
